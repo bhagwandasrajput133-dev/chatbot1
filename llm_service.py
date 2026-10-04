@@ -1,18 +1,14 @@
 import os
-from openai import OpenAI
+import cohere
 
-# Together AI is compatible with the OpenAI SDK
-client = OpenAI(
-    api_key=os.environ.get("TOGETHER_API_KEY"),
-    base_url="https://api.together.xyz/v1",
-)
+client = cohere.Client(os.environ.get("COHERE_API_KEY"))
 
 def generate_response(user_message: str) -> str: 
     try:
-        response = client.chat.completions.create(
-            messages=[{"role": "user", "content": user_message}],
-            model="meta-llama/Llama-3.3-70B-Instruct-Turbo" 
+        response = client.chat(
+            model="command-r",
+            message=user_message
         )
-        return response.choices[0].message.content
+        return response.text
     except Exception as e:
         return f"Error: Unable to connect to the language model. Details: {str(e)}"
