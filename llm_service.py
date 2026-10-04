@@ -7,7 +7,7 @@ client = genai.Client()
 def generate_response(user_message: str) -> str: 
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.8-flash",
             contents=user_message
         )
         return response.text
