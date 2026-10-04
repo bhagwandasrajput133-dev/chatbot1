@@ -6,7 +6,7 @@ client = cohere.Client(os.environ.get("COHERE_API_KEY"))
 def generate_response(user_message: str) -> str: 
     try:
         response = client.chat(
-            model="command",
+            mmodel="command-r-plus-08-2024",
             message=user_message
         )
         return response.text
