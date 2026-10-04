@@ -1,5 +1,15 @@
+import os
+from google import genai
+
+# The SDK automatically picks up the GEMINI_API_KEY environment variable
+client = genai.Client()
+
 def generate_response(user_message: str) -> str: 
-    """ Generates a response for the user's message.
-    Currently, this is a simple echo function.
-    In the future, this can be swapped out to call a real LLM API like Gemini. """ 
-    return f"Bot: I received your message - {user_message}"
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=user_message
+        )
+        return response.text
+    except Exception as e:
+        return f"Error: Unable to connect to the language model. Details: {str(e)}"
